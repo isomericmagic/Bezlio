@@ -1,0 +1,18 @@
+<table class="table table-hover">
+   <thead>
+    <tr>
+      <th>Order Number</th>
+     <th>Customer</th>
+     <th>Order Total</th>
+     <th>Need By Date</th>
+    </tr>
+   </thead>
+  <tbody>
+   <tr class="read" *ngFor="let item of bezl.data.datasub0">
+     <td><b>{{item.OrderHed_OrderNum}}</b></td>
+     <td><b>{{item.Customer_Customer_Name}}</b></td>
+     <td><b>{{item.OrderHed_TotalCharges}}</b></td>
+     <td><b>{{item.OrderHed_NeedByDate | date:'MM/dd/yyyy'}}</b></td>
+   </tr>
+  </tbody>
+</table>
