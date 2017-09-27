@@ -1,4 +1,4 @@
 # CREDIT HOLD #
-This is basically just a list of customers (and orders) of clients that are currently on credit hold.
+This is basically just a list of customers and orders that are currently on credit hold.
 
 ![Credit Hold](creditHold.png)
