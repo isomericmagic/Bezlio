@@ -1,0 +1,69 @@
+﻿{
+  "id": "674a15c4-dbd1-4f7a-8482-4cd2fced37cf",
+  "name": "Order History",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "results",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "<table class=\"table table-hover\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Order Num</th>",
+    "     <th>PO Num</th>",
+    "     <th>Order Date</th>",
+    "     <th>Total Charges</th>",
+    "     <th>Total Invoiced</th>",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.vars['results']\">",
+    "    <td>{{item.OrderHed_OrderNum}}</td>",
+    "    <td>{{item.OrderHed_PONum}}</td>",
+    "    <td>{{item.OrderHed_OrderDate | date:'MM/dd/yyyy'}}</td>",
+    "    <td>{{item.OrderHed_TotalCharges | currency:'USD':true}}</td>",
+    "    <td>{{item.OrderHed_TotalInvoiced | currency:'USD':true}}</td>",
+    "   </tr>",
+    "  </tbody>",
+    "</table>",
+    "<div class=\"row\">",
+    "  \t<!--<pre>{{bezl.vars['results'] | json }}</pre>-->",
+    "</div>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "bezl.dataService.add('orderDtl','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderLookup\",\n   \"Parameters\": [{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] },0);",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "bezl.dataService.add('orderDtl', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderLookup\", \"Parameters\": [{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] }, 0);\r\n"
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;\nif (bezl.data.orderDtl != null) {\n\tbezl.vars['results'] = bezl.data.orderDtl;\n  \tbezl.dataService.remove('orderDtl');\n}",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "bezl.data = dataResp;\r\nif (bezl.data.orderDtl != null) {\r\n    bezl.vars['results'] = bezl.data.orderDtl;\r\n    bezl.dataService.remove('orderDtl');\r\n}\r\n"
+    }
+  ],
+  "data": ""
+}

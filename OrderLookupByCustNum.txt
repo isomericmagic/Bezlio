@@ -1,0 +1,73 @@
+﻿{
+  "id": "23f7ca07-13db-4497-b9c1-ca432f214303",
+  "name": "OrderLookupByCustNum",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "orderNumber",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Order Number <input type=\"text\" [(ngModel)]=\"bezl.vars['orderNumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "",
+    "<table class=\"table table-hover\">",
+    "    <thead>",
+    "        <tr>",
+    "        <th>Order Number</th>",
+    "        <th>PO Number</th>",
+    "        <th>Order Amount</th>",
+    "        <th>Order Date</th>",
+    "        <th>Open Order</th>",
+    "        </tr>",
+    "    </thead>",
+    "    <tbody>",
+    "    <tr class=\"read\" *ngFor=\"let item of bezl.data.OrderNumberLookup\">",
+    "        <td>{{item.Order_Num}}</td>",
+    "        <td>{{item.PO_Num}}</td>",
+    "        <td>{{item.Order_Amt | currency:'USD':true}}</td>",
+    "        <td>{{item.Order_Date | date:'MM/dd/yyyy'}}</td>",
+    "        <td>{{item.OpenOrder}}</td>",
+    "    </tr>",
+    "    </tbody>",
+    "    </table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('OrderNumberLookup','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderNumberLookup\",\n   \"Parameters\": [{ \"Key\": \"orderNumber\", \"Value\": bezl.vars['orderNumber'] }] },0);\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "bezl.dataService.add('OrderNumberLookup', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderNumberLookup\", \"Parameters\": [{ \"Key\": \"orderNumber\", \"Value\": bezl.vars['orderNumber'] }] }, 0);\r\n"
+    }
+  ],
+  "data": ""
+}

@@ -1,0 +1,67 @@
+﻿{
+  "id": "01e27b73-35fc-4de0-8e6d-aa5816a0ee77",
+  "name": "Credit Hold - Total Amount",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [],
+  "dataSubscriptions": [
+    {
+      "onDemand": null,
+      "name": "datasub0",
+      "connectionId": "cbf62688-75e2-4a99-9426-b8ad8feeb38f",
+      "dataSource": "brdb",
+      "plugin": "SQLServer",
+      "method": "ExecuteQuery",
+      "args": "{\"Context\":\"Queries\",\"Connection\":\"EpicorLive10\",\"QueryName\":\"totalCreditHoldByCustomer\"}",
+      "data": null,
+      "refreshInverval": 0,
+      "lastRefresh": null
+    }
+  ],
+  "markup": [
+    "<table class=\"table table-hover\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Customer Name</th>",
+    "     <th>Total Credit Hold Amount</th>",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.data.datasub0\">",
+    "    <td>{{item.CustomerName}}</td>",
+    "    <td>{{item.OpenValueSum | currency:'USD':true}}</td>",
+    "   </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": ""
+    }
+  ],
+  "data": ""
+}

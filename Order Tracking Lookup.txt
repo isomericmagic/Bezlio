@@ -1,0 +1,76 @@
+﻿{
+  "id": "1e39f4d1-e178-45c0-8b4c-82764d5f60a7",
+  "name": "Order Tracking Lookup",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "ordernumber",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Order Number <input type=\"text\" [(ngModel)]=\"bezl.vars['ordernumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "<table class=\"table table-hover\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Order Number</th>",
+    "     <th>Packing Number</th>",
+    "     <th>Ship Date</th>",
+    "     <th>Tracking Number</th>",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.data.OrderTrackingLookup\">",
+    "    <td>{{item.OrderHed_OrderNum}}</td>",
+    "    <td>{{item.ShipHead_PackNum}}</td>",
+    "    <td>{{item.ShipHead_ShipDate | date:'MM/dd/yyyy'}}</td>",
+    "     <td><u><a target = \"_blank\" href=\"https://www.google.com/search?q={{item.ShipHead_TrackingNumber}}\">{{item.ShipHead_TrackingNumber}}</a></u></td>",
+    "   </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('OrderTrackingLookup','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderTrackingLookup\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }] },0);\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require"
+      ],
+      "compiled": "bezl.dataService.add('OrderTrackingLookup', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerOrderTrackingLookup\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }] }, 0);\r\n"
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": ""
+    }
+  ],
+  "data": ""
+}

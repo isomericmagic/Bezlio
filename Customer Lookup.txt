@@ -1,0 +1,69 @@
+﻿{
+  "id": "dd9ff161-eb01-4152-95e2-d251db68b06d",
+  "name": "Customer Lookup",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "customernumber",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Customer <input type=\"text\"[(ngModel)]=\"bezl.vars['customernumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "<table class=\"table table-hover\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Customer Number</th>",
+    "     <th>Customer Name</th>",
+    "     <th>Address</th>",
+    "     <th>City</th>",
+    "     <th>State</th>",
+    "     <th>Zip</th>",
+    "     <th>Sales Region</th>",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.data.CustomerLookup\">",
+    "    <td>{{item.Customer_CustNum}}</td>",
+    "    <td>{{item.Customer_Name}}</td>",
+    "    <td>{{item.Customer_Address}}</td>",
+    "    <td>{{item.Customer_City}}</td>",
+    "    <td>{{item.Customer_State}}</td>",
+    "    <td>{{item.Customer_Zip}}</td>",
+    "    <td>{{item.Customer_Territory}}</td>",
+    "   </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('CustomerLookup','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerLookup\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require"
+      ],
+      "compiled": "bezl.dataService.add('CustomerLookup', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"customerLookup\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\n"
+    }
+  ],
+  "data": ""
+}

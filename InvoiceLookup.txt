@@ -1,0 +1,148 @@
+﻿{
+  "id": "bd55f554-87d5-4295-9292-98794d4abb24",
+  "name": "InvoiceLookup",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "ordernumber",
+      "value": "\"\""
+    },
+    {
+      "name": "printContents",
+      "value": "\"\""
+    },
+    {
+      "name": "originalContents",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "",
+    "<h1>Invoice Lookup</h1>",
+    "<br>",
+    "<b>Order Number</b> <input type=\"text\" [(ngModel)]=\"bezl.vars['ordernumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "<br>",
+    "  <div id=\"printableSection\">",
+    "    <div id=\"printcontent\">",
+    "    <img src=\"http://mkdiamond.com/m/images/site/mk_index_logo.jpg\" alt=\"MK Diamond Logo\">",
+    "    <h3>Order Number: {{bezl.vars['ordernumber']}}</h3>",
+    "    <h4>Ship To Info</h4>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToName}}</div>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToAddress1}}</div>",
+    "      <!--<div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToAddress2}}</div>-->",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToAddress3}}</div>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToCity}}</div>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToState}}</div>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToZip}}</div>",
+    "      <div class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup4\">{{item.ShipToCountry}}</div>   ",
+    "\t<h4>Invoice Details</h4>",
+    "\t<table class=\"table table-hover\">",
+    "    \t<thead>",
+    "        \t<tr>",
+    "        \t<th>Line</th>",
+    "        \t<th>Part Number</th>",
+    "        \t<th>Description</th>",
+    "        \t<th>Unit Price</th>",
+    "        \t<th>Quantity</th>",
+    "        \t<th>Ext. Price</th>",
+    "        \t</tr>",
+    "    \t</thead>",
+    "    \t<tbody>",
+    "    \t<tr class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup2\">",
+    "        \t<td>{{item.InvoiceLine}}</td>",
+    "        \t<td>{{item.PartNum}}</td>",
+    "        \t<td>{{item.LineDesc}}</td>",
+    "        \t<td>{{item.UnitPrice | currency:'USD':true}}</td>",
+    "        \t<td>{{item.OurShipQty}}</td>",
+    "        \t<td>{{item.ExtPrice | currency:'USD':true}}</td>",
+    "    \t</tr>",
+    "    \t</tbody>",
+    "\t</table>",
+    "\t<h4>Miscellaneous Charges</h4>",
+    "\t<table class=\"table table-hover\">",
+    "    \t<thead>",
+    "        \t<tr>",
+    "        \t<th>Misc. Charge</th>",
+    "        \t<th>Amount</th>",
+    "        \t</tr>",
+    "    \t</thead>",
+    "    \t<tbody>",
+    "    \t<tr class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup3\">",
+    "        \t<td>{{item.Description}}</td>",
+    "        \t<td>{{item.MiscAmt | currency:'USD':true}}</td>",
+    "    \t</tr>",
+    "    \t</tbody>",
+    "\t</table>",
+    "\t<h4>Invoice Summary</h4>",
+    "\t<table class=\"table table-hover\">",
+    "    \t<thead>",
+    "        \t<tr>",
+    "        \t<th>Invoice Amount</th>",
+    "        \t<th>Invoice Number</th>",
+    "        \t<th>Invoice Date</th>",
+    "        \t<th>Invoice Balance</th>",
+    "        \t<th>PO Number</th>",
+    "        \t</tr>",
+    "    \t</thead>",
+    "    \t<tbody>",
+    "    \t<tr class=\"read\" *ngFor=\"let item of bezl.data.InvoiceLookup1\">",
+    "        \t<td>{{item.InvoiceAmt | currency:'USD':true}}</td>",
+    "        \t<td>{{item.InvoiceNum}}</td>",
+    "        \t<td>{{item.InvoiceDate | date:'MM/dd/yyyy'}}</td>",
+    "        \t<td>{{item.InvoiceBal | currency:'USD':true}}</td>",
+    "        \t<td>{{item.PONum}}</td>",
+    "    \t</tr>",
+    "    \t</tbody>",
+    "\t</table>",
+    "    </div>",
+    "  </div>",
+    "  <button (click)=\"bezl.functions['onButtonClick1']()\" class=\"btn btn-md btn-primary\">Print</button>",
+    "<br>    ",
+    ""
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('InvoiceLookup1','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup1\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] },{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] },0);\nbezl.dataService.add('InvoiceLookup2','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup2\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] },{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] },0);\nbezl.dataService.add('InvoiceLookup3','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup3\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] },{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] },0);\nbezl.dataService.add('InvoiceLookup4','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup4\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] },{ \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] },0);\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "bezl.dataService.add('InvoiceLookup1', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup1\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }, { \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] }, 0);\r\nbezl.dataService.add('InvoiceLookup2', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup2\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }, { \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] }, 0);\r\nbezl.dataService.add('InvoiceLookup3', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup3\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }, { \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] }, 0);\r\nbezl.dataService.add('InvoiceLookup4', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"invoiceLookup4\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }, { \"Key\": \"emailAddress\", \"Value\": bezl.env.currentUser }] }, 0);\r\n"
+    },
+    {
+      "method": "onButtonClick1",
+      "code": "//var printContents = document.getElementById(\"printableSection\").innerHTML;\n//var originalContents = document.body.innerHTML;\n//document.body.innerHTML = printContents;\n//window.print();\n//document.body.innerHTML = originalContents;\n\nvar printContent = document.getElementById('printableSection');\nif (printContent) {\n  $(printContent).clone().attr('id', 'printcontentbody').appendTo('body').hide();\n}\nwindow.print();\n\n$(document.getElementById('printcontentbody')).remove();\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "var FusionCharts; //var printContents = document.getElementById(\"printableSection\").innerHTML;\r\n//var originalContents = document.body.innerHTML;\r\n//document.body.innerHTML = printContents;\r\n//window.print();\r\n//document.body.innerHTML = originalContents;\r\nvar printContent = document.getElementById('printableSection');\r\nif (printContent) {\r\n    $(printContent).clone().attr('id', 'printcontentbody').appendTo('body').hide();\r\n}\r\nwindow.print();\r\n$(document.getElementById('printcontentbody')).remove();\r\n"
+    }
+  ],
+  "data": ""
+}

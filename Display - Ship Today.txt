@@ -1,0 +1,75 @@
+﻿{
+  "id": "1e2c88a1-9f56-48f2-9220-37a458dca931",
+  "name": "Display - Ship Today",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [],
+  "dataSubscriptions": [
+    {
+      "onDemand": null,
+      "name": "datasub0",
+      "connectionId": "cbf62688-75e2-4a99-9426-b8ad8feeb38f",
+      "dataSource": "brdb",
+      "plugin": "SQLServer",
+      "method": "ExecuteQuery",
+      "args": "{\"Context\":\"Queries\",\"Connection\":\"EpicorLive10\",\"QueryName\":\"shipTodayOrders\"}",
+      "data": null,
+      "refreshInverval": 1,
+      "lastRefresh": null
+    }
+  ],
+  "markup": [
+    "<table class=\"table table-hover\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Order Number</th>",
+    "     <th>Customer</th>",
+    "     <th>Carrier</th>",
+    "     <th>Entered By</th>",
+    "     <th>Need By Date</th>",
+    "     <th>Credit Hold</th>",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.data.datasub0\">",
+    "    <td><b>{{item.OrderHed_OrderNum}}</b></td>",
+    "    <td><b>{{item.Customer_Name}}</b></td>",
+    "    <td><b>{{item.ShipVia_Description}}</b></td>",
+    "    <td><b>{{item.OrderHed_EntryPerson}}</b></td>",
+    "    <td><b>{{item.Need_By_Date | date:'MM/dd/yyyy' }}</b></td>",
+    "    <td><b>{{item.Customer_CreditHold}}</b></td>",
+    "   </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": ""
+    }
+  ],
+  "data": ""
+}

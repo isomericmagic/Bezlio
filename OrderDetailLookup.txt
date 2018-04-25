@@ -1,0 +1,77 @@
+﻿{
+  "id": "f4fced87-b8d9-4168-8534-ae5e3521c24b",
+  "name": "OrderDetailLookup",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "ordernumber",
+      "value": "\"\""
+    },
+    {
+      "name": "textValue",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Order Number <input type=\"text\" [(ngModel)]=\"bezl.vars['ordernumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "",
+    "<table class=\"table table-hover\">",
+    "    <thead>",
+    "        <tr>",
+    "        <th>Order Line</th>",
+    "        <th>Part Number</th>",
+    "        <th>Line Description</th>",
+    "        <th>Unit Price</th>",
+    "        <th>Order Qty</th>",
+    "        <th>Ext Price</th>",
+    "        </tr>",
+    "    </thead>",
+    "    <tbody>",
+    "    <tr class=\"read\" *ngFor=\"let item of bezl.data.OrderDetailLookup\">",
+    "        <td>{{item.OrderLine}}</td>",
+    "        <td>{{item.PartNum}}</td>",
+    "        <td>{{item.LineDesc}}</td>",
+    "        <td>{{item.UnitPrice | currency:'USD':true}}</td>",
+    "        <td>{{item.OrderQty}}</td>",
+    "        <td>{{item.ExtPrice | currency:'USD':true}}</td>",
+    "    </tr>",
+    "    </tbody>",
+    "    </table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "compiled": ""
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('OrderDetailLookup','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"orderDetailLookup\",\n   \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }] },0);\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": "bezl.dataService.add('OrderDetailLookup', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"orderDetailLookup\", \"Parameters\": [{ \"Key\": \"ordernumber\", \"Value\": bezl.vars['ordernumber'] }] }, 0);\r\n"
+    }
+  ],
+  "data": "",
+  "deleted": false
+}

@@ -1,0 +1,94 @@
+﻿{
+  "id": "8ac4b7b2-f9c6-4eef-97d7-49510c7e1d15",
+  "name": "Customer Finance",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "customernumber",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Customer Number <input type=\"text\" [(ngModel)]=\"bezl.vars['customernumber']\"> <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "<table class=\"table table-hover\">",
+    "  <thead>",
+    "    <tr>",
+    "      <th>Item</th>",
+    "      <th>Year to Date</th>",
+    "      <th>Last Year</th> ",
+    "    </tr>",
+    "  </thead>",
+    "  <tbody>",
+    "    <tr>",
+    "      <td><b>Total Revenue</b></td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.RevenueAndCostThisYear\">{{item.Total_Revenue | currency:'USD':true}}</td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.RevenueAndCostLastYear\">{{item.Total_Revenue | currency:'USD':true}}</td>",
+    "    </tr>",
+    "    <tr>",
+    "      <td><b>Total Cost</b></td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.RevenueAndCostThisYear\">{{item.Total_Cost | currency:'USD':true}}</td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.RevenueAndCostLastYear\">{{item.Total_Cost | currency:'USD':true}}</td>",
+    "    </tr>",
+    "    <tr>",
+    "      <td><b>Credit Memos</b></td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.CreditMemoThisYear\">{{item.Total_Credit_Memo | currency:'USD':true}}</td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.CreditMemoLastYear\">{{item.Total_Credit_Memo | currency:'USD':true}}</td>",
+    "    </tr>",
+    "    <tr>",
+    "      <td><b>Number of Invoices</b></td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.BillingInfoThisYear\">{{item.Number_Of_Invoices}}</td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.BillingInfoLastYear\">{{item.Number_Of_Invoices}}</td>",
+    "    </tr>",
+    "    <tr>",
+    "      <td><b>Avg. Days to Pay</b></td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.BillingInfoThisYear\">{{item.Average_Days_To_Pay}}</td>",
+    "      <td class=\"read\" *ngFor=\"let item of bezl.data.BillingInfoLastYear\">{{item.Average_Days_To_Pay}}</td>",
+    "    </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('RevenueAndCostThisYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"revenueAndCostThisYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n\nbezl.dataService.add('RevenueAndCostLastYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"revenueAndCostLastYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n\nbezl.dataService.add('BillingInfoThisYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"billingInfoThisYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n\nbezl.dataService.add('BillingInfoLastYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"billingInfoLastYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n\nbezl.dataService.add('CreditMemoThisYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"creditMemoThisYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n\nbezl.dataService.add('CreditMemoLastYear','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"creditMemoLastYear\",\n   \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] },0);\n",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require"
+      ],
+      "compiled": "bezl.dataService.add('RevenueAndCostThisYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"revenueAndCostThisYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\nbezl.dataService.add('RevenueAndCostLastYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"revenueAndCostLastYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\nbezl.dataService.add('BillingInfoThisYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"billingInfoThisYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\nbezl.dataService.add('BillingInfoLastYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"billingInfoLastYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\nbezl.dataService.add('CreditMemoThisYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"creditMemoThisYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\nbezl.dataService.add('CreditMemoLastYear', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"creditMemoLastYear\", \"Parameters\": [{ \"Key\": \"customernumber\", \"Value\": bezl.vars['customernumber'] }] }, 0);\r\n"
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require",
+        "FusionCharts"
+      ],
+      "compiled": ""
+    }
+  ],
+  "data": ""
+}

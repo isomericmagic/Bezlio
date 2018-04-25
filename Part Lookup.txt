@@ -1,0 +1,65 @@
+﻿{
+  "id": "8d094514-efad-41c4-a0cf-2fcdc0f5ecc4",
+  "name": "Part Lookup",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [
+  ],
+  "vars": [
+    {
+      "name": "partnumber",
+      "value": "\"\""
+    }
+  ],
+  "dataSubscriptions": [],
+  "markup": [
+    "Part Number/Description <input type=\"text\" [(ngModel)]=\"bezl.vars['partnumber']\">  <button (click)=\"bezl.functions['onButtonClick']()\" class=\"btn btn-md btn-primary\">Search</button>",
+    "<table class=\"table table-hover table-mail\">",
+    "   <thead>",
+    "    <tr>",
+    "     <th>Part Number</th>",
+    "     <th>Description</th>",
+    "     <th>In Stock</th>",
+    "     <th>Demand Qty.</th>",
+    "      <!--<th>Warehouse Code</th>-->",
+    "    </tr>",
+    "   </thead>",
+    "  <tbody>",
+    "   <tr class=\"read\" *ngFor=\"let item of bezl.data.PartInventoryLookup\">",
+    "    <td>{{item.PartWhse_PartNum}}</td>",
+    "    <td>{{item.Part_PartDescription}}</td>",
+    "    <td>{{item.PartWhse_OnHandQty}}</td>",
+    "    <td>{{item.PartWhse_DemandQty}}</td>",
+    "     <!--<td>{{item.PartWhse_Code}}</td>-->",
+    "   </tr>",
+    "  </tbody>",
+    "</table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "declares": [],
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "declares": [],
+      "compiled": "bezl.data = dataResp;"
+    },
+    {
+      "method": "onButtonClick",
+      "code": "bezl.dataService.add('PartInventoryLookup','brdb','SQLServer','ExecuteQuery',\n   { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"lookupInventory\",\n   \"Parameters\": [{ \"Key\": \"partnumber\", \"Value\": bezl.vars['partnumber'] }] },0);",
+      "declares": [
+        "$",
+        "parm",
+        "bezl",
+        "dataResp",
+        "require"
+      ],
+      "compiled": "bezl.dataService.add('PartInventoryLookup', 'brdb', 'SQLServer', 'ExecuteQuery', { \"Context\": \"Queries\", \"Connection\": \"EpicorLive10\", \"QueryName\": \"lookupInventory\", \"Parameters\": [{ \"Key\": \"partnumber\", \"Value\": bezl.vars['partnumber'] }] }, 0);\r\n"
+    }
+  ],
+  "data": ""
+}
