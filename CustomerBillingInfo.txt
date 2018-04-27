@@ -1,0 +1,66 @@
+﻿{
+  "id": "867b8e45-8cfc-4d73-a066-b344dab3347d",
+  "name": "CustomerBillingInfo-BigDog",
+  "template": "custom",
+  "owner": "brian_johnson@mkdiamond.com",
+  "shares": [],
+  "vars": [],
+  "dataSubscriptions": [
+    {
+      "connectionId": "cbf62688-75e2-4a99-9426-b8ad8feeb38f",
+      "refreshInverval": 0,
+      "name": "datasub0",
+      "dataSource": "brdb",
+      "plugin": "SQLServer",
+      "method": "ExecuteQuery",
+      "args": {
+        "Context": "Queries",
+        "Connection": "EpicorLive10",
+        "QueryName": "customerBillingSummary"
+      }
+    }
+  ],
+  "markup": [
+    "<table class=\"table table-hover\">",
+    "    <thead>",
+    "        <tr>",
+    "        <th>PO Number</th>",
+    "        <th>Order Number</th>",
+    "        <th>Invoice Number</th>",
+    "        <th>Invoice Date</th>",
+    "        <th>Invoice Amount</th>",
+    "        <th>Invoice Balance</th>",
+    "        </tr>",
+    "    </thead>",
+    "    <tbody>",
+    "    <tr class=\"read\" *ngFor=\"let item of bezl.data.datasub0\">",
+    "        <td>{{item.PONumber}}</td>",
+    "        <td>{{item.OrderNumber}}</td>",
+    "        <td>{{item.InvoiceNumber}}</td>",
+    "        <td>{{item.InvoiceDate | date:'MM/dd/yyyy'}}</td>",
+    "        <td>{{item.InvoiceAmount | currency:'USD':true}}</td>",
+    "        <td>{{item.InvoiceBalance | currency:'USD':true}}</td>",
+    "    </tr>",
+    "    </tbody>",
+    "    </table>"
+  ],
+  "functions": [
+    {
+      "method": "ngOnInit",
+      "code": "",
+      "compiled": ""
+    },
+    {
+      "method": "ngAfterViewInit",
+      "code": "",
+      "compiled": ""
+    },
+    {
+      "method": "onDataChange",
+      "code": "bezl.data = dataResp;",
+      "compiled": "bezl.data = dataResp;"
+    }
+  ],
+  "data": "",
+  "deleted": false
+}
